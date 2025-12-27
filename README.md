@@ -1,70 +1,72 @@
-# 🛡️ HFish Honeypot Threat Feed (High Fidelity)
+<div align="center">
+  <a href="README.md">🇺🇸 English</a> | 
+  <a href="README_CN.md">🇨🇳 简体中文</a> | 
+  <a href="README_TW.md">🇭🇰 繁體中文</a> | 
+  <a href="README_JP.md">🇯🇵 日本語</a> |
+  <a href="README_FR.md">🇫🇷 Français</a> |
+  <a href="README_ES.md">🇪🇸 Español</a>
+</div>
+<br/>
+
+
+
+# 🛡️ HFish Honeypot Threat Feed
 
 [![Update Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yuexuan521/honeypot-blocklist)
 [![Data Source](https://img.shields.io/badge/Source-HFish-blue.svg)](https://hfish.net/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 
-> **⚠️ 警告 Warning**: 本项目提供的威胁情报完全由自动化程序生成。虽然已包含白名单过滤机制，但在生产环境部署拦截规则前，**请务必自行评估风险**。
+> **⚠️ Warning**: This threat feed is automatically generated. While whitelisting mechanisms are in place, please evaluate the risks before deploying it in a production environment.
 
-## 📖 项目简介 (Introduction)
+## 📖 Introduction
 
-本项目是一个开源的威胁情报源（Threat Intelligence Feed），数据来源于真实互联网环境部署的高交互蜜罐系统（HFish）。
+This project provides an open-source **Threat Intelligence Feed** derived from a high-interaction honeypot system (HFish) deployed in a real-world internet environment.
 
-该系统实时捕获并分析针对 SSH、HTTP、MySQL、Redis 等服务的恶意扫描、暴力破解及漏洞利用行为。经过自动化脚本清洗和白名单过滤后，生成高保真（High Fidelity）的恶意 IP 列表。
+It captures malicious behaviors such as SSH/RDP brute-force attacks, web vulnerability scanning, and unauthorized database access in real-time. The data is processed through automated scripts and whitelisting filters to generate a **High Fidelity** list of malicious IPs.
 
-## 🔗 订阅地址 (Subscription URLs)
+## 🔗 Subscription URLs
 
-您可以直接在防火墙、WAF 或 SIEM 系统中使用以下链接：
+You can use the following links directly in your Firewall, WAF, or SIEM systems:
 
-| 格式     | URL (点击直达)                                               | 描述                                                     |
-| :------- | :----------------------------------------------------------- | :------------------------------------------------------- |
-| **TXT**  | [ip_list.txt](https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt) | 纯文本格式，每行一个 IP。适用于防火墙 EDL、Linux ipset。 |
-| **JSON** | *(如有)*                                                     | *(预留位置)*                                             |
+| Format  | URL (Direct Link)                                            | Description                                                  |
+| :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| **TXT** | [ip_list.txt](https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt) | Plain text, one IP per line. Suitable for Firewall EDL, Linux IPSet. |
 
-> **提示**: 推荐使用 GitHub Pages 的 URL（如上），而不是 raw.githubusercontent.com，因为前者在国内访问更稳定，且 Content-Type 正确。
+> **Note**: It is recommended to use the GitHub Pages URL above for better stability.
 
-## 📊 数据元数据 (Metadata)
+## 📊 Metadata
 
-*   **数据来源 (Source)**: HFish 蜜罐 (V3+ 版本)，部署于公网环境。
-*   **捕获类型 (Attack Types)**: 
-    *   SSH/RDP 暴力破解 (Brute-force)
-    *   Web 漏洞扫描与利用 (Web Scanning & Exploits)
-    *   数据库未授权访问探测
-*   **时间窗口 (Time Window)**: 仅包含 **过去 24 小时内** 活跃的攻击源。
-*   **更新频率 (Frequency)**: 每 **2 ~ 4 小时** 自动更新一次。
-*   **白名单策略 (Whitelisting)**:
-    *   ✅ 已自动排除 GoogleBot, BingBot 等知名搜索引擎爬虫。
-    *   ✅ 已自动排除 GitHub Services。
-    *   ✅ 已自动排除 Cloudflare DNS 等公共基础设施。
+*   **Source**: HFish Honeypot (V3+), Public Internet.
+*   **Attack Types**: SSH/RDP Brute-force, Web Exploits, Database Scanners.
+*   **Time Window**: Last **24 Hours** only.
+*   **Update Frequency**: Every **2~4 Hours**.
+*   **Whitelisting**: Automatically excludes GoogleBot, BingBot, GitHub Services, and Cloudflare.
 
-## 🛠️ 使用方法 (Usage Examples)
+## 🛠️ Usage Example (Linux IPSet)
 
-### 1. Palo Alto Networks (PAN-OS)
-在 **Objects -> External Dynamic Lists** 中新建一个 IP List，将 Source URL 指向 `ip_list.txt`，设置刷新频率为 `Hourly`。
-
-### 2. Linux Server (IPSet + Iptables)
 ```bash
-# 下载名单
+# 1. Download the list
 wget -O /tmp/blacklist.txt https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt
 
-# 创建 ipset 集合
+# 2. Create IPSet
 ipset create honeypot_blacklist hash:ip hashsize 4096
 
-# 导入黑名单
+# 3. Import IPs
 while read ip; do ipset add honeypot_blacklist $ip; done < /tmp/blacklist.txt
 
-# 在 iptables 中封禁
+# 4. Block in Iptables
 iptables -I INPUT -m set --match-set honeypot_blacklist src -j DROP
 ```
 
-## ⚖️ 免责声明 (Disclaimer)
+## ⚖️ Disclaimer
 
-1.  **数据准确性**: 本项目所提供的数据基于蜜罐自动化捕获，虽然已尽力过滤误报（False Positives），但无法保证 100% 准确。可能会包含被攻击者利用的跳板机或动态 IP。
-2.  **风险自负**: 任何个人或组织使用本项目提供的威胁情报数据（IP 列表、域名等），均属于**自愿行为**。
-3.  **免责条款**: 
-    *   对于因直接封禁本列表中的 IP 而导致的任何**业务中断、网络不可达、数据丢失或经济损失**，项目维护者概不负责。
-    *   本项目不提供任何形式的明示或暗示担保。
-4.  **数据移除**: 如果您发现您的 IP 被误报，请提交 Issue 进行反馈，我会尽快处理。
+1. 
+2. **Accuracy**: The data is automatically captured. While we strive to minimize false positives, it may contain compromised hosts or dynamic IPs.
+3. **At Your Own Risk**: The use of this data is voluntary.
+4. **Liability**: The maintainer is not responsible for any **business interruption, network unavailability, or data loss** caused by blocking IPs from this list.
 
----
+------
+
+
+
 *Auto-generated by [HFish](https://hfish.net) & Python Automation Script.*
