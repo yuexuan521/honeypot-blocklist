@@ -32,8 +32,6 @@ You can use the following links directly in your Firewall, WAF, or SIEM systems:
 | :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
 | **TXT** | [ip_list.txt](https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt) | Plain text, one IP per line. Suitable for Firewall EDL, Linux IPSet. |
 
-> **Note**: It is recommended to use the GitHub Pages URL above for better stability.
-
 ## 📊 Metadata
 
 *   **Source**: HFish Honeypot (V3+), Public Internet.

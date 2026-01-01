@@ -23,8 +23,6 @@
 | **TXT**  | [ip_list.txt](https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt) | 纯文本格式，每行一个 IP。适用于防火墙 EDL、Linux ipset。 |
 | **JSON** | *(如有)*                                                     | *(预留位置)*                                             |
 
-> **提示**: 推荐使用 GitHub Pages 的 URL（如上），而不是 raw.githubusercontent.com，因为前者在国内访问更稳定，且 Content-Type 正确。
-
 ## 📊 数据元数据 (Metadata)
 
 *   **数据来源 (Source)**: HFish 蜜罐 (V3+ 版本)，部署于公网环境。
