@@ -55,6 +55,23 @@ while read ip; do ipset add honeypot_blacklist $ip; done < /tmp/blacklist.txt
 # 4. Block in Iptables
 iptables -I INPUT -m set --match-set honeypot_blacklist src -j DROP
 ```
+## 🛠️ Developer Tools & SDK (开发者工具)
+
+We provide a Python SDK and CLI tool to help developers integrate this feed easily.
+
+### 1. Python SDK Usage
+You can use our `ThreatFeedClient` in your own Python projects:
+
+```python
+from tools.client import ThreatFeedClient
+
+feed = ThreatFeedClient()
+feed.fetch_data()
+
+# Check an IP
+if feed.is_malicious("192.168.1.5"):
+    print("Block this IP!")
+```
 
 ## ⚖️ Disclaimer
 
