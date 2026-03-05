@@ -107,6 +107,18 @@ We provide ready-to-use configurations for popular infrastructure:
 | **[Cloudflare](integrations/cloudflare/)**         | Worker | Serverless edge blocking script.                     |
 | **[Palo Alto](integrations/paloalto/)**            | Docs   | Enterprise firewall EDL configuration guide.         |
 
+## 🧰 For HFish Users: Generate Your Own Feed
+
+If you are running your own HFish honeypot, you can use our open-source tool to generate threat feeds from your own data.
+
+### Usage
+1. Clone this repository.
+2. Run the generator tool:
+   - tools\generate_feed.py
+   - tools\update_feed.sh
+
+> Refer to this article:[Practical Guide: Building an Automated Threat Intelligence Source Based on HFish + Python + GitHub Pages](https://www.freebuf.com/articles/others-articles/467125.html)
+
 ## ⚖️ Disclaimer
 
 1. **Accuracy**: The data is automatically captured. While we strive to minimize false positives, it may contain compromised hosts or dynamic IPs.
