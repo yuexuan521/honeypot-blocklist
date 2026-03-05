@@ -117,7 +117,7 @@ If you are running your own HFish honeypot, you can use our open-source tool to 
    - tools\generate_feed.py
    - tools\update_feed.sh
 
-> Refer to this article:[Practical Guide: Building an Automated Threat Intelligence Source Based on HFish + Python + GitHub Pages](https://www.freebuf.com/articles/others-articles/467125.html)
+> Refer to this article:[Practical Guide: Building an Automated Threat Intelligence Source Based on HFish + Python + GitHub Pages](https://yuexuan521.github.io/zh/posts/%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%9F%BA%E4%BA%8E-hfish--python--github-pages-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%BA%90/#%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%BC%80%E6%BA%90%E7%BB%99%E4%BB%96%E4%BA%BA%E4%BD%BF%E7%94%A8)
 
 ## ⚖️ Disclaimer
 
