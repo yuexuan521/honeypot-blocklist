@@ -7,9 +7,9 @@ import sys
 from datetime import datetime, timedelta
 
 # ================= 配置区 =================
-HFISH_HOST = "https://IP:4433"                       //!!填写你的Hish网址!!
-API_KEY = ""                                         //!!填写你的Hish API Key!!
-OUTPUT_TXT = "/root/threat-feed/ip_list.txt"         //!!填写你保存文件的地址!!
+HFISH_HOST = "https://IP:4433"                       #!!填写你的Hish网址!!
+API_KEY = ""                                         #!!填写你的Hish API Key!!
+OUTPUT_TXT = "/root/threat-feed/ip_list.txt"         #!!填写你保存文件的地址!!
 TIME_WINDOW_HOURS = 24 
 
 LOCAL_WHITELIST = [
