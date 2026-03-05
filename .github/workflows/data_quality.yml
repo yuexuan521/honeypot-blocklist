@@ -1,0 +1,44 @@
+name: Data Quality Check
+
+# 触发条件：
+# 1. 向 main 分支推送代码时
+# 2. 发起 Pull Request 时
+# 3. 每天凌晨 0 点定时检查 (可选)
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  validate-feed:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. 拉取代码
+    - uses: actions/checkout@v3
+
+    # 2. 设置 Python 环境
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # 3. 安装依赖 (如果有的话，这里只需运行标准库)
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # pip install -r tools/requirements.txt (如果后续脚本复杂了再加)
+
+    # 4. 运行我们写的校验脚本
+    - name: Run Validation Script
+      run: |
+        python tests/validate_feed.py
+    
+    # 5. (可选) 简单的代码语法检查，确保 tools 目录下的代码没写错
+    - name: Lint Python Tools
+      run: |
+        pip install flake8
+        # 检查 tools 目录，忽略一些格式警告，只看语法错误
+        flake8 tools --count --select=E9,F63,F7,F82 --show-source --statistics

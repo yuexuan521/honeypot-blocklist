@@ -15,6 +15,7 @@
 [![Update Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yuexuan521/honeypot-blocklist)
 [![Data Source](https://img.shields.io/badge/Source-HFish-blue.svg)](https://hfish.net/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
+[![Data Quality Check](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml/badge.svg)](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml)
 
 > **⚠️ Warning**: This threat feed is automatically generated. While whitelisting mechanisms are in place, please evaluate the risks before deploying it in a production environment.
 
