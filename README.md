@@ -95,6 +95,17 @@ docker build -t hfish-feed .
 docker run --rm hfish-feed --check 1.1.1.1
 ```
 
+## 🔌 Integrations (集成方案)
+
+We provide ready-to-use configurations for popular infrastructure:
+
+| Platform                                           | Type   | Description                                          |
+| :------------------------------------------------- | :----- | :--------------------------------------------------- |
+| **[Nginx](integrations/nginx/)**                   | Script | Auto-generate `deny.conf` for web servers.           |
+| **[Linux Firewall](integrations/linux-iptables/)** | Script | High-performance blocking with `ipset` + `iptables`. |
+| **[Cloudflare](integrations/cloudflare/)**         | Worker | Serverless edge blocking script.                     |
+| **[Palo Alto](integrations/paloalto/)**            | Docs   | Enterprise firewall EDL configuration guide.         |
+
 ## ⚖️ Disclaimer
 
 1. **Accuracy**: The data is automatically captured. While we strive to minimize false positives, it may contain compromised hosts or dynamic IPs.
