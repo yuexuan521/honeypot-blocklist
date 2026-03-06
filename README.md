@@ -1,67 +1,106 @@
-<div align="center">
-  <a href="README.md">🇺🇸 English</a> | 
-  <a href="README_CN.md">🇨🇳 简体中文</a> | 
-  <a href="README_TW.md">🇭🇰 繁體中文</a> | 
-  <a href="README_JP.md">🇯🇵 日本語</a> |
-  <a href="README_FR.md">🇫🇷 Français</a> |
-  <a href="README_ES.md">🇪🇸 Español</a>
-</div>
-<br/>
+[English](README.md) | [简体中文](README_CN.md) | [繁體中文](README_TW.md) | [日本語](README_JP.md) | [Français](README_FR.md) | [Español](README_ES.md)
 
+# HFish Honeypot Threat Feed
 
-
-# 🛡️ HFish Honeypot Threat Feed
-
-[![Update Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yuexuan521/honeypot-blocklist)
-[![Data Source](https://img.shields.io/badge/Source-HFish-blue.svg)](https://hfish.net/)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yuexuan521/honeypot-blocklist)
+[![Source](https://img.shields.io/badge/Source-HFish-blue.svg)](https://hfish.net/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 [![Data Quality Check](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml/badge.svg)](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml)
 
-> **⚠️ Warning**: This threat feed is automatically generated. While whitelisting mechanisms are in place, please evaluate the risks before deploying it in a production environment.
+High-fidelity malicious IP feed generated from **HFish honeypot telemetry**, built for **Firewall / WAF / SIEM / IPSet / EDL** workflows.
 
-## 📖 Introduction
+This project continuously collects attacker IPs observed by publicly exposed HFish honeypots, applies automated filtering and whitelisting, and publishes a clean blocklist that can be consumed by security controls and automation pipelines.
 
-This project provides an open-source **Threat Intelligence Feed** derived from a high-interaction honeypot system (HFish) deployed in a real-world internet environment.
+> **Warning**
+> This feed is generated automatically. Although filtering and whitelisting are applied, you should validate enforcement strategy before using it in production.
 
-It captures malicious behaviors such as SSH/RDP brute-force attacks, web vulnerability scanning, and unauthorized database access in real-time. The data is processed through automated scripts and whitelisting filters to generate a **High Fidelity** list of malicious IPs.
+---
 
-## 🔗 Subscription URLs
+## Why this project exists
 
-You can use the following links directly in your Firewall, WAF, or SIEM systems:
+Internet-facing honeypots observe a large volume of brute-force attempts, exploit scans, and opportunistic intrusion traffic. This repository turns those observations into a reusable **defensive threat feed** so operators can:
 
-| Format  | URL (Direct Link)                                            | Description                                                  |
-| :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| **TXT** | [ip_list.txt](https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt) | Plain text, one IP per line. Suitable for Firewall EDL, Linux IPSet. |
+- block recent attacker IPs at the edge
+- enrich SIEM detections with known hostile sources
+- automate deny rules in Linux firewalls and web infrastructure
+- build their own HFish-based threat feed workflows
 
-## 📊 Metadata
+---
 
-*   **Source**: HFish Honeypot (V3+), Public Internet.
-*   **Attack Types**: SSH/RDP Brute-force, Web Exploits, Database Scanners.
-*   **Time Window**: Last **24 Hours** only.
-*   **Update Frequency**: Every **2~4 Hours**.
-*   **Whitelisting**: Automatically excludes GoogleBot, BingBot, GitHub Services, and Cloudflare.
+## What you get
 
-## 🛠️ Usage Example (Linux IPSet)
+- **24-hour rolling malicious IP feed**
+- **Automatic refresh every 2–4 hours**
+- **Plain-text subscription URL**
+- **Python SDK and CLI**
+- **Docker support**
+- **Reference integrations** for Nginx, Linux firewall, Cloudflare, and Palo Alto
+- **MIT-licensed open-source tooling**
+
+---
+
+## Threat feed URL
+
+Use this URL directly in supported security products and scripts:
+
+| Format | URL                                                          | Recommended use                                 |
+| ------ | ------------------------------------------------------------ | ----------------------------------------------- |
+| TXT    | `https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt` | Firewall EDL, Linux IPSet, WAF, SIEM enrichment |
+
+---
+
+## Feed profile
+
+| Item               | Value                                                        |
+| ------------------ | ------------------------------------------------------------ |
+| Source             | HFish Honeypot (V3+)                                         |
+| Observation scope  | Public Internet                                              |
+| Included activity  | SSH/RDP brute-force, web exploitation/scanning, unauthorized service probing |
+| Time window        | Last 24 hours                                                |
+| Update cadence     | Every 2–4 hours                                              |
+| Filtering          | Automatic cleanup and basic whitelisting                     |
+| Typical exclusions | Known legitimate infrastructure such as GoogleBot, BingBot, GitHub services, and Cloudflare where applicable |
+
+---
+
+## Why trust this feed
+
+This repository is designed to be simple, inspectable, and automation-friendly:
+
+- **Open data format**: one IP per line, easy to audit and consume
+- **Open tooling**: generation, client, and CLI logic live in the repository
+- **Documented risk boundary**: false positives are possible and explicitly acknowledged
+- **Operational focus**: built for direct use in real security controls, not just as a demo dataset
+
+That said, no automated threat feed is perfect. Shared hosting, NAT gateways, compromised endpoints, and dynamic IP reassignment can all create noise. Review enforcement strategy before applying blocks globally.
+
+---
+
+## Quick start
+
+### Linux IPSet + iptables
 
 ```bash
-# 1. Download the list
+# 1) Download the latest feed
 wget -O /tmp/blacklist.txt https://yuexuan521.github.io/honeypot-blocklist/ip_list.txt
 
-# 2. Create IPSet
+# 2) Create an IP set
 ipset create honeypot_blacklist hash:ip hashsize 4096
 
-# 3. Import IPs
-while read ip; do ipset add honeypot_blacklist $ip; done < /tmp/blacklist.txt
+# 3) Import IPs
+while read ip; do
+  ipset add honeypot_blacklist "$ip"
+done < /tmp/blacklist.txt
 
-# 4. Block in Iptables
+# 4) Drop matching traffic
 iptables -I INPUT -m set --match-set honeypot_blacklist src -j DROP
-```
-## 🛠️ Developer Tools & SDK (开发者工具)
+~~~
 
-We provide a Python SDK and CLI tool to help developers integrate this feed easily.
+------
 
-### 1. Python SDK Usage
-You can use our `ThreatFeedClient` in your own Python projects:
+## Developer usage
+
+### Python SDK
 
 ```python
 from tools.client import ThreatFeedClient
@@ -69,64 +108,176 @@ from tools.client import ThreatFeedClient
 feed = ThreatFeedClient()
 feed.fetch_data()
 
-# Check an IP
-if feed.is_malicious("192.168.1.5"):
-    print("Block this IP!")
+if feed.is_malicious("1.2.3.4"):
+    print("Block this IP")
+else:
+    print("IP not currently listed")
 ```
 
-### 2. CLI Tool Usage (Command Line)
+### CLI
 
-Administrators can use the CLI to check IPs or export data:
+```bash
+# Download the latest feed
+python3 tools/cli.py --update
 
-```
-# Check specific IP
+# Check a single IP
 python3 tools/cli.py --check 1.2.3.4
-# Output: ✅ SAFE: IP 1.2.3.4 is not currently listed.
 
 # Export as JSON
 python3 tools/cli.py --export json
+
+# Export as TXT
+python3 tools/cli.py --export txt
 ```
 
-### 3. Docker Usage
+### Docker
 
-Run the tool without installing Python dependencies:
-
-```
+```bash
 docker build -t hfish-feed .
 docker run --rm hfish-feed --check 1.1.1.1
 ```
 
-## 🔌 Integrations (集成方案)
+------
 
-We provide ready-to-use configurations for popular infrastructure:
+## Integrations
 
-| Platform                                           | Type   | Description                                          |
-| :------------------------------------------------- | :----- | :--------------------------------------------------- |
-| **[Nginx](integrations/nginx/)**                   | Script | Auto-generate `deny.conf` for web servers.           |
-| **[Linux Firewall](integrations/linux-iptables/)** | Script | High-performance blocking with `ipset` + `iptables`. |
-| **[Cloudflare](integrations/cloudflare/)**         | Worker | Serverless edge blocking script.                     |
-| **[Palo Alto](integrations/paloalto/)**            | Docs   | Enterprise firewall EDL configuration guide.         |
+The `integrations/` directory contains platform-specific examples:
 
-## 🧰 For HFish Users: Generate Your Own Feed
-
-If you are running your own HFish honeypot, you can use our open-source tool to generate threat feeds from your own data.
-
-### Usage
-1. Clone this repository.
-2. Run the generator tool:
-   - tools\generate_feed.py
-   - tools\update_feed.sh
-
-> Refer to this article:[Practical Guide: Building an Automated Threat Intelligence Source Based on HFish + Python + GitHub Pages](https://yuexuan521.github.io/zh/posts/%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%9F%BA%E4%BA%8E-hfish--python--github-pages-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%BA%90/#%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%BC%80%E6%BA%90%E7%BB%99%E4%BB%96%E4%BA%BA%E4%BD%BF%E7%94%A8)
-
-## ⚖️ Disclaimer
-
-1. **Accuracy**: The data is automatically captured. While we strive to minimize false positives, it may contain compromised hosts or dynamic IPs.
-2. **At Your Own Risk**: The use of this data is voluntary.
-3. **Liability**: The maintainer is not responsible for any **business interruption, network unavailability, or data loss** caused by blocking IPs from this list.
+| Platform       | Type          | Purpose                                         |
+| -------------- | ------------- | ----------------------------------------------- |
+| Nginx          | Script        | Generate deny rules for web servers             |
+| Linux Firewall | Script        | Use `ipset` + `iptables` for efficient blocking |
+| Cloudflare     | Worker        | Edge-side blocking logic                        |
+| Palo Alto      | Documentation | External Dynamic List (EDL) integration         |
 
 ------
 
+## Build your own feed from HFish
 
+If you run your own HFish deployment, you can reuse this project to generate a private or organization-specific blocklist.
 
-*Auto-generated by [HFish](https://hfish.net) & Python Automation Script.*	
+Relevant tooling:
+
+- `tools/generate_feed.py`
+- `tools/update_feed.sh`
+
+Reference article:
+
+- **Practical Guide: Building an Automated Threat Intelligence Source Based on HFish + Python + GitHub Pages**
+
+------
+
+## Repository layout
+
+```text
+.
+├── .github/workflows/       # data quality / automation
+├── integrations/            # platform-specific integration examples
+├── tools/                   # generator, client SDK, CLI, update scripts
+├── tests/                   # tests
+├── ip_list.txt              # published threat feed
+└── README*.md               # multilingual documentation
+```
+
+------
+
+## Project maturity
+
+This repository is maintained as a practical security utility rather than a research-only proof of concept.
+
+Current project signals:
+
+- public repository
+- open license
+- documented feed semantics
+- CLI and SDK access patterns
+- integration examples
+- automated data quality workflow badge
+
+For production adoption, users should still evaluate:
+
+- enforcement scope
+- false-positive handling
+- refresh cadence expectations
+- rollback strategy
+- local allowlist requirements
+
+------
+
+## Reporting false positives
+
+False positives are possible.
+
+If you believe an IP was listed incorrectly, please open an Issue and include:
+
+- the affected IP
+- why it should be removed
+- relevant supporting evidence
+- approximate timestamp if known
+
+This helps improve feed quality over time.
+
+------
+
+## Security
+
+This repository publishes a blocklist and supporting tooling. It is **not** a prevention guarantee, and it should not be treated as a complete threat intelligence solution.
+
+Recommended usage:
+
+- apply as one signal among multiple controls
+- combine with local allowlists
+- test in monitor mode before hard enforcement
+- review impact on shared or dynamic IP ranges
+
+For vulnerability reports related to repository code or automation, please use GitHub Issues unless you prefer a private disclosure path.
+
+------
+
+## Contributing
+
+Contributions are welcome.
+
+Good contribution areas include:
+
+- feed quality improvements
+- false-positive reduction
+- parser and client improvements
+- new integrations
+- documentation and translation fixes
+- tests and CI hardening
+
+Please open an Issue first for larger changes so design and scope can be discussed before implementation.
+
+------
+
+## Roadmap
+
+Planned or desirable future improvements:
+
+- richer metadata feed formats
+- stricter false-positive suppression
+- additional firewall / SIEM integrations
+- better testing coverage
+- feed statistics and transparency reporting
+
+------
+
+## Disclaimer
+
+1. **Accuracy**
+   Data is collected and processed automatically. We aim to reduce noise, but compromised hosts, shared infrastructure, or dynamic IPs may still appear.
+2. **Use at your own risk**
+   You are responsible for evaluating the suitability of this feed before using it in production.
+3. **No liability**
+   The maintainer is not responsible for service interruption, loss of connectivity, or data loss caused by enforcement decisions based on this feed.
+
+------
+
+## License
+
+Released under the **MIT License**.
+
+------
+
+Powered by [HFish](https://hfish.net/) and Python automation.
