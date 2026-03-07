@@ -109,7 +109,7 @@ done < /tmp/blacklist.txt
 
 # 4) 丢弃匹配流量
 iptables -I INPUT -m set --match-set honeypot_blacklist src -j DROP
-~~~
+```
 
 ------
 

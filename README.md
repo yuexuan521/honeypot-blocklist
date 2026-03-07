@@ -94,7 +94,8 @@ done < /tmp/blacklist.txt
 
 # 4) Drop matching traffic
 iptables -I INPUT -m set --match-set honeypot_blacklist src -j DROP
-~~~
+
+```
 
 ------
 
@@ -112,7 +113,7 @@ if feed.is_malicious("1.2.3.4"):
     print("Block this IP")
 else:
     print("IP not currently listed")
-```
+````
 
 ### CLI
 
