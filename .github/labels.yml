@@ -1,0 +1,123 @@
+- name: false-positive
+  color: "d93f0b"
+  description: Report of an IP that may have been incorrectly listed
+
+- name: bug
+  color: "d73a4a"
+  description: Something is not working as expected
+
+- name: enhancement
+  color: "a2eeef"
+  description: Improvement to an existing feature or workflow
+
+- name: feature
+  color: "0e8a16"
+  description: Request for a new feature
+
+- name: documentation
+  color: "0075ca"
+  description: Documentation or README improvements
+
+- name: integration
+  color: "5319e7"
+  description: Integration with external platforms or tools
+
+- name: security
+  color: "b60205"
+  description: Security-related issue or discussion
+
+- name: data-quality
+  color: "fbca04"
+  description: Feed quality, filtering, or false-positive reduction issue
+
+- name: question
+  color: "d4c5f9"
+  description: General usage question
+
+- name: needs-triage
+  color: "ededed"
+  description: Issue needs initial review and classification
+
+- name: needs-info
+  color: "f9d0c4"
+  description: More information is required from the reporter
+
+- name: confirmed
+  color: "0e8a16"
+  description: Issue has been reproduced or confirmed by a maintainer
+
+- name: in-progress
+  color: "1d76db"
+  description: Work is currently in progress
+
+- name: blocked
+  color: "000000"
+  description: Cannot move forward until a dependency or condition is resolved
+
+- name: duplicate
+  color: "cfd3d7"
+  description: This issue already exists elsewhere
+
+- name: invalid
+  color: "e4e669"
+  description: Report is not actionable or does not apply
+
+- name: wontfix
+  color: "ffffff"
+  description: This will not be worked on
+
+- name: help wanted
+  color: "008672"
+  description: Community contribution is welcome
+
+- name: good first issue
+  color: "7057ff"
+  description: Good entry point for first-time contributors
+
+- name: cli
+  color: "bfdadc"
+  description: Related to the command-line interface
+
+- name: sdk
+  color: "bfd4f2"
+  description: Related to the Python SDK
+
+- name: feed
+  color: "fef2c0"
+  description: Related to the published threat feed itself
+
+- name: docker
+  color: "0db7ed"
+  description: Related to Docker usage or image behavior
+
+- name: ci
+  color: "c2e0c6"
+  description: Continuous integration or GitHub Actions related
+
+- name: tests
+  color: "f9c2ff"
+  description: Test coverage or test failures
+
+- name: readme
+  color: "0052cc"
+  description: README-specific issue or improvement
+
+- name: translations
+  color: "006b75"
+  description: Multilingual documentation related
+
+- name: nginx
+  color: "7f52ff"
+  description: Nginx integration related
+
+- name: cloudflare
+  color: "f38020"
+  description: Cloudflare integration related
+
+- name: palo-alto
+  color: "6f42c1"
+  description: Palo Alto integration related
+
+- name: linux-firewall
+  color: "3fb950"
+  description: Linux firewall, ipset, or iptables integration related
