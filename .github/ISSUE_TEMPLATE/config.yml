@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security or sensitive report
+    url: https://github.com/yuexuan521/honeypot-blocklist/security
+    about: Please use a private channel for sensitive security disclosures if available.

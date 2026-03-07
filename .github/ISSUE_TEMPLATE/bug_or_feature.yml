@@ -1,0 +1,93 @@
+name: Bug Report / Feature Request
+description: Report a bug, propose an improvement, or request a new feature
+title: "[Issue] "
+labels: ["needs-triage"]
+body:
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Issue type
+      description: What kind of issue are you opening?
+      options:
+        - Bug report
+        - Feature request
+        - Documentation improvement
+        - Integration request
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Briefly describe the issue or request
+      placeholder: |
+        Example:
+        - CLI export fails when network is unavailable
+        - Add Suricata-compatible export format
+        - Improve README instructions for Palo Alto EDL
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: Current behavior
+      description: For bugs, describe what is happening now. For requests, describe the current limitation.
+      placeholder: |
+        Example:
+        - The CLI exits with an exception
+        - There is currently no metadata-rich output format
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: Describe what you expected to happen
+      placeholder: |
+        Example:
+        - The command should fail gracefully with a clear error
+        - The project should support JSONL export with timestamps
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce (for bugs)
+      description: Provide clear reproduction steps if applicable
+      placeholder: |
+        1. Run ...
+        2. Use ...
+        3. Observe ...
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Provide relevant environment information
+      placeholder: |
+        - OS:
+        - Python version:
+        - Docker version:
+        - Tool or integration used:
+        - Feed file version / timestamp:
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution or idea
+      description: If you have a suggestion, describe it here
+      placeholder: |
+        Example:
+        - Add a new CLI flag
+        - Provide an additional integration example
+        - Improve documentation structure
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues before creating this one
+          required: true
+        - label: I have removed sensitive information from logs and screenshots
+          required: true

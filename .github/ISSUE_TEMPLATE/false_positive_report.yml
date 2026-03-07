@@ -1,0 +1,79 @@
+name: False Positive Report
+description: Report an IP that you believe was incorrectly included in the threat feed
+title: "[False Positive] "
+labels: ["false-positive"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve feed quality.
+
+        Please provide as much detail as possible so we can investigate efficiently.
+        Do not include sensitive information that you do not want to disclose publicly.
+
+  - type: input
+    id: ip_address
+    attributes:
+      label: Affected IP address
+      description: The IP address you believe was incorrectly listed
+      placeholder: 1.2.3.4
+    validations:
+      required: true
+
+  - type: input
+    id: detected_time
+    attributes:
+      label: Approximate detection time
+      description: When you noticed the IP was listed, if known
+      placeholder: "2026-03-06 14:00 UTC"
+
+  - type: dropdown
+    id: ip_type
+    attributes:
+      label: IP type
+      description: Select the type that best matches this IP
+      options:
+        - Residential IP
+        - Office / Enterprise IP
+        - Cloud / VPS IP
+        - CDN / Reverse Proxy
+        - Shared Hosting
+        - Unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why do you believe this is a false positive?
+      description: Explain why this IP should not be listed
+      placeholder: |
+        Example:
+        - This is a corporate office egress IP
+        - No attack activity was observed internally
+        - The IP belongs to a trusted service
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Share any logs, screenshots, reverse DNS, ownership info, or other evidence
+      placeholder: |
+        Example:
+        - ISP / ASN information
+        - Reverse DNS
+        - Service ownership proof
+        - Relevant timestamps
+        - Sanitized logs
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I understand this report will be publicly visible unless I use a private disclosure method
+          required: true
+        - label: I have removed sensitive data from logs and screenshots
+          required: true
