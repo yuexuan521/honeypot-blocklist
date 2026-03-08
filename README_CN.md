@@ -7,6 +7,8 @@
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 [![Data Quality Check](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml/badge.svg)](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml)
 
+[![Release](https://img.shields.io/github/v/release/yuexuan521/honeypot-blocklist)](https://github.com/yuexuan521/honeypot-blocklist/releases)
+
 基于 **HFish 蜜罐遥测数据** 自动生成的高可信恶意 IP 订阅源，适用于 **防火墙 / WAF / SIEM / IPSet / EDL** 等安全防护场景。
 
 本项目持续收集部署在公网环境中的 HFish 蜜罐所观测到的攻击源 IP，对数据进行自动过滤和白名单处理，并以简洁、可自动化接入的形式发布，方便安全设备和防御系统直接消费。
