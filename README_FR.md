@@ -6,6 +6,7 @@
 [![Source](https://img.shields.io/badge/Source-HFish-blue.svg)](https://hfish.net/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 [![Data Quality Check](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml/badge.svg)](https://github.com/yuexuan521/honeypot-blocklist/actions/workflows/data_quality.yml)
+[![Release](https://img.shields.io/github/v/release/yuexuan521/honeypot-blocklist)](https://github.com/yuexuan521/honeypot-blocklist/releases)
 
 Flux d’adresses IP malveillantes à haute fiabilité, généré automatiquement à partir de la **télémétrie des honeypots HFish**, conçu pour les environnements **pare-feu / WAF / SIEM / IPSet / EDL**.
 
