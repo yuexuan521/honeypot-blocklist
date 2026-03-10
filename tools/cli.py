@@ -1,7 +1,7 @@
 import argparse
 import sys
 import json
-from client import ThreatFeedClient
+from .client import ThreatFeedClient
 
 def main():
     parser = argparse.ArgumentParser(description="HFish Threat Feed CLI Tool")
