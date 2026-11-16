@@ -13,17 +13,17 @@ on:
 
 jobs:
   validate-feed:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # 固定 runner 版本，避免 ubuntu-latest 升级后 Python 版本不可用
 
     steps:
     # 1. 拉取代码
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     # 2. 设置 Python 环境
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.9"
+        python-version: "3.12"
 
     # 3. 安装依赖 (如果有的话，这里只需运行标准库)
     - name: Install dependencies
